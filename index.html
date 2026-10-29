@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nexo Inmobiliario — Angular CRM SaaS</title>
+    <meta name="description" content="Plataforma SaaS de gestión integral para inmobiliarias en Angular y TypeScript: inventario de propiedades, leads, portal multiposting, oportunidades y agenda comercial." />
+    <meta property="og:title" content="Nexo Inmobiliario — Angular CRM SaaS" />
+    <meta property="og:description" content="Plataforma SaaS de gestión integral para inmobiliarias en Angular y TypeScript." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/index.css" />
+    <link rel="stylesheet" href="/angular/src/styles.css" />
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased selection:bg-teal-500 selection:text-white overflow-hidden">
+    <!-- Framework Switcher Ribbon: Allows immediate review of Angular and toggling to original React -->
+    <div id="framework-switcher" class="flex items-center justify-between px-4 py-1.5 bg-[#07111e] text-slate-400 text-xs border-b border-[#1E3A5F] z-50 shrink-0 select-none">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-teal-400 animate-pulse"></span>
+        <span class="font-bold text-white tracking-tight">Nexo Inmobiliario</span>
+        <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-teal-500/20 text-teal-300 border border-teal-500/30">
+          Angular 22 + TypeScript
+        </span>
+        <span class="text-slate-400 text-[11px] hidden sm:inline">
+          (Estructura modular con Signals, Material & Bootstrap)
+        </span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button 
+          id="toggle-framework-btn" 
+          type="button"
+          class="px-2.5 py-1 rounded bg-[#132A4A] hover:bg-[#1E3A5F] text-slate-200 hover:text-white border border-[#1E3A5F] text-[11px] font-medium transition-colors cursor-pointer"
+        >
+          Ver React original
+        </button>
+      </div>
+    </div>
+
+    <!-- Angular Root Container -->
+    <div id="angular-container" class="h-[calc(100vh-34px)] w-screen overflow-hidden">
+      <app-root></app-root>
+    </div>
+
+    <!-- React Root Container (Preserved) -->
+    <div id="react-container" class="h-[calc(100vh-34px)] w-screen overflow-y-auto" style="display: none;">
+      <div id="root"></div>
+    </div>
+
+    <script type="module">
+      const urlParams = new URLSearchParams(window.location.search);
+      const forcedMode = urlParams.get('mode');
+      const savedMode = localStorage.getItem('nexo_app_mode');
+      const currentMode = forcedMode || savedMode || 'angular';
+
+      const toggleBtn = document.getElementById('toggle-framework-btn');
+      const angularContainer = document.getElementById('angular-container');
+      const reactContainer = document.getElementById('react-container');
+
+      if (currentMode === 'react') {
+        angularContainer.style.display = 'none';
+        reactContainer.style.display = 'block';
+        toggleBtn.textContent = '⚡ Cambiar a versión Angular';
+        toggleBtn.classList.add('bg-teal-600', 'text-white');
+        import('/src/main.tsx');
+      } else {
+        angularContainer.style.display = 'block';
+        reactContainer.style.display = 'none';
+        toggleBtn.textContent = 'Ver versión React original';
+        import('/angular/src/main.ts');
+      }
+
+      toggleBtn.addEventListener('click', () => {
+        const nextMode = currentMode === 'react' ? 'angular' : 'react';
+        localStorage.setItem('nexo_app_mode', nextMode);
+        const url = new URL(window.location);
+        url.searchParams.set('mode', nextMode);
+        window.location.href = url.toString();
+      });
+    </script>
+  </body>
+</html>

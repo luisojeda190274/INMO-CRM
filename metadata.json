@@ -1,0 +1,6 @@
+{
+  "name": "Nexo Inmobiliario",
+  "description": "CRM Inmobiliario profesional y SaaS multi-inmobiliaria inspirado en Tokko Broker con gestión de propiedades, contactos, oportunidades, publicaciones y agenda.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
